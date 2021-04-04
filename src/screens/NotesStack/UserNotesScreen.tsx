@@ -49,7 +49,7 @@ const UserNotesScreen = observer(() => {
                             <Text style={styles.noteItemText}>{item.noteText}</Text>
                             <TouchableOpacity
                                 onPress={() => deleteNote(item._id)}
-                                              style={[styles.btnDelete]}
+                                style={[styles.btnDelete]}
                             >
                                 <IconRemove/>
                             </TouchableOpacity>

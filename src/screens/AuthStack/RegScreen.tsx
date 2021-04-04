@@ -6,11 +6,12 @@ import {useStores} from "../../hooks/use-stores";
 import NavigationService from "../../navigation/NavigationService";
 import Screens from "../../navigation/Screens";
 import Notification from "../../utils/NotificationUtil";
+import Loader from "../../components/ui/Loader";
 
 
 export const RegScreen = observer(() => {
     const {authStore} = useStores()
-    const {reg} = authStore
+    const {reg, authLoader} = authStore
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -37,6 +38,10 @@ export const RegScreen = observer(() => {
         reg(data)
     }
 
+    if(authLoader){
+        return <Loader/>
+    }
+
     return (
         <View style={styles.mainContainer}>
             <View style={{marginTop: 140}}/>
@@ -55,6 +60,7 @@ export const RegScreen = observer(() => {
 
             <TextInput
                 placeholder="Пароль"
+                secureTextEntry={true}
                 style={styles.input}
                 onChangeText={text => registerHandlerPassword(text)}
                 value={password}
@@ -62,6 +68,7 @@ export const RegScreen = observer(() => {
 
             <TextInput
                 placeholder="Повторите пароль"
+                secureTextEntry={true}
                 style={styles.input}
                 onChangeText={text => registerHandlerPassword2(text)}
                 value={password2}

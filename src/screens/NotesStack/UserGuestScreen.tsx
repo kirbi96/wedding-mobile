@@ -47,7 +47,13 @@ const UserGuestScreen = observer(() =>{
                         onChangeText={(text) => registerHandlerPerson(text)}
                         value={String(person)}
                     />
-                    <TouchableOpacity onPress={() => addGuest(guest, person)} style={styles.btn}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            addGuest(guest, person)
+                            setGuest("")
+                            setPerson("2")
+                        }}
+                        style={styles.btn}>
                         <IconAddGuest/>
                     </TouchableOpacity>
                 </View>

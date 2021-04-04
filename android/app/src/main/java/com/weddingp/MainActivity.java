@@ -1,4 +1,4 @@
-package com.wedding;
+package com.weddingp;
 
 import com.facebook.react.ReactActivity;
 

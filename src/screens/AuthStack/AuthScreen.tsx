@@ -5,11 +5,12 @@ import {observer} from "mobx-react";
 import {useStores} from "../../hooks/use-stores";
 import NavigationService from "../../navigation/NavigationService";
 import Screens from "../../navigation/Screens";
+import Loader from "../../components/ui/Loader";
 
 
 export const AuthScreen = observer(() => {
     const {authStore} = useStores()
-    const {login} = authStore
+    const {login, authLoader} = authStore
 
     // const [email, setEmail] = useState("repetitorkazan@mail.ru")
     // const [password, setPassword] = useState("123123123")
@@ -30,6 +31,11 @@ export const AuthScreen = observer(() => {
         login(data)
     }
 
+    if(authLoader){
+        return <Loader/>
+    }
+
+
     return(
         <View style={styles.mainContainer}>
             <View style={{marginTop: 140}}/>
@@ -43,6 +49,7 @@ export const AuthScreen = observer(() => {
 
             <TextInput
                 placeholder="Пароль"
+                secureTextEntry={true}
                 style={styles.input}
                 onChangeText={text => registerHandlerPassword(text)}
                 value={password}

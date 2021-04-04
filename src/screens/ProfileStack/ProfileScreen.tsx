@@ -18,7 +18,7 @@ export enum UserFormTypes {
 const ProfileScreen = observer(() => {
     const {authStore, userStore} = useStores()
     const {logout} = authStore
-    const {weddingDate, city, manName, womanName} = userStore.userInfo.personal
+    // const {weddingDate, city, manName, womanName} = userStore.userInfo.personal
 
     const [userInfo, setUserInfo] = useState(userStore.userInfo.personal)
 
@@ -54,6 +54,7 @@ const ProfileScreen = observer(() => {
                 <Text style={styles.label}>Имя жениха</Text>
                 <View style={styles.inputContainer}>
                     <TextInput
+                        placeholder={"Имя жениха"}
                         style={styles.input}
                         onChangeText={text => registerHandler(text, UserFormTypes.MAN)}
                         value={userInfo?.manName}
@@ -66,6 +67,7 @@ const ProfileScreen = observer(() => {
                 <Text style={styles.label}>Имя невесты</Text>
                 <View style={styles.inputContainer}>
                     <TextInput
+                        placeholder={"Имя невесты"}
                         style={styles.input}
                         onChangeText={text => registerHandler(text, UserFormTypes.WOMAN)}
                         value={userInfo?.womanName}
@@ -79,8 +81,8 @@ const ProfileScreen = observer(() => {
                 <TouchableOpacity onPress={() => NavigationService.navigate("WeddingDateScreen")}
                                   style={styles.inputContainer}>
                     <View style={styles.input}>
-                        <Text style={styles.dateText}>
-                            {moment(weddingDate).toISOString().substring(0, 10) || ''}
+                        <Text style={[styles.dateText, {color: userInfo?.personal?.weddingDate ? Colors.BLACK : Colors.MEDIUM_GRAY}]}>
+                            {userInfo?.personal?.weddingDate ? moment(userInfo?.personal?.weddingDate).toISOString().substring(0, 10) : 'Выбрать дату'}
                         </Text>
                     </View>
                 </TouchableOpacity>
@@ -91,18 +93,18 @@ const ProfileScreen = observer(() => {
                                   style={styles.inputContainer}>
                     <View style={styles.input}>
                         <Text style={styles.dateText}>
-                            {city || 'Не выбрано'}
+                            {userInfo?.personal?.city || 'Не выбрано'}
                         </Text>
                     </View>
                 </TouchableOpacity>
 
-                {userInfo?.womanName !== womanName || userInfo?.manName !== manName && (
+                {/*{userInfo?.womanName !== userInfo?.personal?.womanName || userInfo?.manName !== userInfo?.personal?.manName && (*/}
                     <TouchableOpacity onPress={() => sendData()} style={styles.bigButton}>
                         <Text style={styles.bigButtonText}>
                             Сохранить
                         </Text>
                     </TouchableOpacity>
-                )}
+                {/*)}*/}
 
                 <TouchableOpacity onPress={() => logout()} style={styles.bigButton}>
                     <Text style={styles.bigButtonText}>
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
     profileBanner: {
         width: "100%",
         height: 200,
-        borderRadius: 5,
+        borderRadius: 8,
     },
     inputContainer: {
         display: "flex",

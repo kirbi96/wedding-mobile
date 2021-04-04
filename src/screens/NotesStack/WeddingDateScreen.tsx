@@ -14,20 +14,21 @@ import {useStores} from "../../hooks/use-stores";
 const WeddingDateScreen = observer(() =>{
     const {userStore} = useStores()
     const {addDate, userInfo, clearDate} = userStore
-    const {weddingDate} = userInfo.personal
+    // const {weddingDate} = userInfo.personal
 
     const [timeTotal, setTimeTotal] = useState(0)
     const [timeMinute, setTimeMinute] = useState(60)
 
     const onDateChange = (date: any) =>{
         if(date){
+            // console.log(12312, date.valueOf())
             addDate(date.valueOf())
         }
     }
 
     const getSecond = () =>{
         const now = moment().valueOf();
-        const diff = weddingDate - now
+        const diff = userInfo?.personal?.weddingDate - now
         setTimeTotal(Math.floor(diff/1000))
     }
 
@@ -38,7 +39,7 @@ const WeddingDateScreen = observer(() =>{
 
     useEffect(() =>{
         getSecond()
-    },[weddingDate])
+    },[userInfo?.personal?.weddingDate])
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -58,7 +59,7 @@ const WeddingDateScreen = observer(() =>{
         return () => clearInterval(interval);
     }, [timeTotal])
 
-
+    // console.log(12312, userInfo?.personal)
 
     return(
         <View style={styles.mainContainer}>
@@ -66,9 +67,9 @@ const WeddingDateScreen = observer(() =>{
             <View>
                 <HeaderBack/>
                 <Title title="Дата свадьбы"/>
-                {weddingDate ? (
+                {userInfo?.personal?.weddingDate ? (
                     <View>
-                        <Text style={styles.dateText}>{moment(weddingDate).toISOString().substring(0,10)}</Text>
+                        <Text style={styles.dateText}>{moment(userInfo?.personal?.weddingDate).toISOString().substring(0,10)}</Text>
                         <View style={[styles.rowCenter, {marginTop: 40}]}>
                             <CountdownCircleTimer
                                 onComplete={() => [true, 100]}
