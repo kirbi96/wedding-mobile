@@ -23,9 +23,10 @@ export class AuthStore {
             runInAction(() => {
                 this.token = token;
                 this.email = email;
-                this.authLoader = false;
             });
-        })
+        }).finally(() => runInAction(() =>{
+            this.authLoader = false
+        }))
     };
 
     reg = (data: any) => {
@@ -35,8 +36,9 @@ export class AuthStore {
                 Notification.showSuccess('Пользователь создан');
                 NavigationService.navigate(Screens.AUTH)
             }
-            this.authLoader = false;
-        })
+        }).finally(() => runInAction(() =>{
+            this.authLoader = false
+        }))
     };
 
     logout = () => {

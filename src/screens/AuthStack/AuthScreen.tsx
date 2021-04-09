@@ -6,6 +6,7 @@ import {useStores} from "../../hooks/use-stores";
 import NavigationService from "../../navigation/NavigationService";
 import Screens from "../../navigation/Screens";
 import Loader from "../../components/ui/Loader";
+import Notification from "../../utils/NotificationUtil";
 
 
 export const AuthScreen = observer(() => {
@@ -28,6 +29,12 @@ export const AuthScreen = observer(() => {
 
     const registerHandler = () =>{
         const data = {email, password}
+
+        if(email === "" || password === "") {
+            Notification.showError("Заполните верные данные");
+            return;
+        }
+
         login(data)
     }
 
@@ -88,6 +95,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: "100%",
         height: 50,
+        borderRadius: 12,
         fontSize: 16,
         borderColor: Colors.BLUE_DARK,
         borderWidth: 1,

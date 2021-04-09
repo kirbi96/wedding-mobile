@@ -5,6 +5,14 @@ class UserAPI {
         return axios.post('user', {email});
     };
 
+    getCity = () => {
+        return axios.get('city/');
+    };
+
+    getCitySearch = (query: string) => {
+        return axios.post('city/search', {query});
+    }
+
     addNote = (note: string, email: string) => {
         return axios.post('user/note/add', {noteText: note, email});
     };
@@ -22,12 +30,12 @@ class UserAPI {
     };
 
     addDate = (weddingDate: number, email: string) => {
-        return axios.post('user/date/add', {weddingDate ,email});
+        return axios.post('user/date/add', {weddingDate, email});
     };
 
     updateUserNames = (manName: string, womanName: string, email: string) => {
-    return axios.post('user/update', {manName, womanName, email});
-};
+        return axios.post('user/update', {manName, womanName, email});
+    };
 }
 
 const userAPI = new UserAPI();

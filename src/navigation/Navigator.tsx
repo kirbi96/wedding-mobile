@@ -32,6 +32,7 @@ import {useStores} from "../hooks/use-stores";
 import {AuthScreen} from "../screens/AuthStack/AuthScreen";
 import {StatusBar} from "react-native";
 import {RegScreen} from "../screens/AuthStack/RegScreen";
+import {CityScreen} from "../screens/ProfileStack/CityScreen";
 
 const Tab = createBottomTabNavigator()
 
@@ -110,6 +111,8 @@ export const Home = observer(() => {
                         <Stack.Screen name={Screens.DATE} component={WeddingDateScreen}/>
                         {/*News*/}
                         <Stack.Screen name={Screens.INNEWS} component={InNewsScreen}/>
+                        {/*City*/}
+                        <Stack.Screen name={Screens.CITY} component={CityScreen}/>
                     </>
                 )}
 

@@ -4,6 +4,7 @@ import NavigationService from "../navigation/NavigationService";
 
 export class OrganizationStore {
     category: any = [];
+    categoryLoader: boolean = false;
     organization: any = {};
     organizationLoader: boolean = false;
     organizationList: any = [];
@@ -18,9 +19,15 @@ export class OrganizationStore {
     }
 
     getCategory = () => {
+        this.categoryLoader = true;
+
         API.organization.getCategory().then((res) => {
             runInAction(() => {
                 this.category = res.data
+            })
+        }).finally(() => {
+            runInAction(() => {
+                this.categoryLoader = false
             })
         })
     }

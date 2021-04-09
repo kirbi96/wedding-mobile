@@ -21,6 +21,9 @@ export default {
     //NEWS
     INNEWS: 'InNewsScreen',
 
+    //NEWS
+    CITY: 'CityScreen',
+
     //Bottom
     HOME: 'HomeScreen',
     NOTE: 'NoteScreen',

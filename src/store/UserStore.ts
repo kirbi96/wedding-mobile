@@ -1,9 +1,12 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import API from "../api/Api";
 import Notification from "../utils/NotificationUtil";
+import {ICity} from "../screens/ProfileStack/CityScreen";
 
 export class UserStore {
     userInfo: any = {};
+    city: ICity[] = [];
+    cityLoader: boolean = false;
     email: string = '';
 
     constructor() {
@@ -21,6 +24,11 @@ export class UserStore {
     }
 
     addNote = (note: string) => {
+        if(note === "") {
+            Notification.showError("Заполните заметку");
+            return;
+        }
+
         API.user.addNote(note, this.email).then((res) => {
             runInAction(() => {
                 this.userInfo.userNotes = res.data?.notes
@@ -37,6 +45,11 @@ export class UserStore {
     }
 
     addGuest = (guestName: string, personCount: string) => {
+        if(guestName === "") {
+            Notification.showError("Заполните гостя");
+            return;
+        }
+
         API.user.addGuest(guestName, personCount, this.email).then((res) => {
             runInAction(() => {
                 this.userInfo.guest = res.data?.guest
@@ -52,7 +65,7 @@ export class UserStore {
         })
     }
 
-    addDate = (weddingDate: number) =>{
+    addDate = (weddingDate: number) => {
         API.user.addDate(weddingDate, this.email).then((res) => {
             runInAction(() => {
                 this.userInfo.personal.weddingDate = res.data?.weddingDate
@@ -60,13 +73,13 @@ export class UserStore {
         })
     }
 
-    clearDate = () =>{
+    clearDate = () => {
         runInAction(() => {
             this.userInfo.personal.weddingDate = null;
         })
     }
 
-    updateUserNames = (manName: string, womanName: string) =>{
+    updateUserNames = (manName: string, womanName: string) => {
         API.user.updateUserNames(manName, womanName, this.email).then((res) => {
             runInAction(() => {
                 this.userInfo.personal = res.data?.personal
@@ -74,6 +87,36 @@ export class UserStore {
 
             Notification.showSuccess('Данные успешно обновлены!');
         })
+    }
+
+    getCity = () => {
+        this.cityLoader = true;
+
+        API.user.getCity().then((res) => {
+            runInAction(() => {
+                this.city = res.data
+            })
+        }).finally(() => runInAction(() => {
+            this.cityLoader = false
+        }))
+    }
+
+    citySearch = (query: string) => {
+
+        API.user.getCitySearch(query).then((res) => {
+            runInAction(() => {
+                this.city = res.data
+            })
+        })
+    }
+
+    changeCity = (cityName: string) => {
+        console.log(222, cityName)
+        // API.user.getCitySearch(query).then((res) => {
+        //     runInAction(() => {
+        //         this.city = res.data
+        //     })
+        // })
     }
 
 }

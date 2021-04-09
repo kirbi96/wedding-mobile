@@ -99,7 +99,7 @@ const WeddingDateScreen = observer(() =>{
                         <View style={styles.bottom}>
                             <TouchableOpacity onPress={onSelectDate} style={styles.btn}>
                                 <Text style={styles.btnText}>
-                                    Установить дату
+                                    Установить другую дату
                                 </Text>
                             </TouchableOpacity>
                         </View>

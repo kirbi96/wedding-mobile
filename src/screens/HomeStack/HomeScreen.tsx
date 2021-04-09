@@ -6,10 +6,11 @@ import Title from "../../components/Title/Title";
 import {observer} from "mobx-react";
 import {useStores} from "../../hooks/use-stores";
 import LinearGradient from "react-native-linear-gradient";
+import Loader from "../../components/ui/Loader";
 
 export const HomeScreen = observer(() => {
   const {organizationStore, userStore, authStore} = useStores()
-  const {getCategory, category} = organizationStore
+  const {getCategory, category, categoryLoader} = organizationStore
   const {getUserInfo} = userStore
   const {email} = authStore
 
@@ -17,6 +18,10 @@ export const HomeScreen = observer(() => {
     getUserInfo(email || '')
     getCategory()
   },[])
+
+  if(categoryLoader){
+    return <Loader/>
+  }
 
   return (
       <ScrollView style={styles.mainContainer}>
