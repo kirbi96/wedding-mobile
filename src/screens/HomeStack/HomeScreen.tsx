@@ -17,6 +17,7 @@ export const HomeScreen = observer(() => {
   useEffect(() =>{
     getUserInfo(email || '')
     getCategory()
+
   },[])
 
   if(categoryLoader){

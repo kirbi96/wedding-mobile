@@ -14,14 +14,12 @@ import {useStores} from "../../hooks/use-stores";
 const WeddingDateScreen = observer(() =>{
     const {userStore} = useStores()
     const {addDate, userInfo, clearDate} = userStore
-    // const {weddingDate} = userInfo.personal
 
     const [timeTotal, setTimeTotal] = useState(0)
     const [timeMinute, setTimeMinute] = useState(60)
 
     const onDateChange = (date: any) =>{
         if(date){
-            // console.log(12312, date.valueOf())
             addDate(date.valueOf())
         }
     }

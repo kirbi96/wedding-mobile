@@ -5,127 +5,121 @@ import {ICity} from "../screens/ProfileStack/CityScreen";
 import NavigationService from "../navigation/NavigationService";
 
 export class UserStore {
-    userInfo: any = {
-        personal: {
-            manName: null,
-            womanName: null,
-            weddingDate: null,
-            city: null,
-        }
-    };
-    city: ICity[] = [];
-    cityLoader: boolean = false;
-    email: string = '';
+  userInfo: any = {};
+  city: ICity[] = [];
+  cityLoader: boolean = false;
+  email: string = '';
 
-    constructor() {
-        makeAutoObservable(this);
+  constructor() {
+    makeAutoObservable(this);
+  }
+
+  getUserInfo = (email: string) => {
+    this.email = email;
+
+    API.user.getUserInfo(email).then((res) => {
+
+      runInAction(() => {
+        this.userInfo = res.data?.user
+      })
+    })
+  }
+
+  addNote = (note: string) => {
+    if (note === "") {
+      Notification.showError("Заполните заметку");
+      return;
     }
 
-    getUserInfo = (email: string) => {
-        this.email = email;
+    API.user.addNote(note, this.email).then((res) => {
+      runInAction(() => {
+        this.userInfo.userNotes = res.data?.notes
+      })
+    })
+  }
 
-        API.user.getUserInfo(email).then((res) => {
-            runInAction(() => {
-                this.userInfo = res.data?.user
-            })
-        })
+  deleteNote = (noteId: string) => {
+    API.user.deleteNote(noteId, this.email).then((res) => {
+      runInAction(() => {
+        this.userInfo.userNotes = res.data?.notes
+      })
+    })
+  }
+
+  addGuest = (guestName: string, personCount: string) => {
+    if (guestName === "") {
+      Notification.showError("Заполните гостя");
+      return;
     }
 
-    addNote = (note: string) => {
-        if(note === "") {
-            Notification.showError("Заполните заметку");
-            return;
-        }
+    API.user.addGuest(guestName, personCount, this.email).then((res) => {
+      runInAction(() => {
+        this.userInfo.guest = res.data?.guest
+      })
+    })
+  }
 
-        API.user.addNote(note, this.email).then((res) => {
-            runInAction(() => {
-                this.userInfo.userNotes = res.data?.notes
-            })
-        })
-    }
+  deleteGuest = (guestId: string) => {
+    API.user.deleteGuest(guestId, this.email).then((res) => {
+      runInAction(() => {
+        this.userInfo.guest = res.data?.guest
+      })
+    })
+  }
 
-    deleteNote = (noteId: string) => {
-        API.user.deleteNote(noteId, this.email).then((res) => {
-            runInAction(() => {
-                this.userInfo.userNotes = res.data?.notes
-            })
-        })
-    }
+  addDate = (weddingDate: number) => {
+    API.user.addDate(weddingDate, this.email).then((res) => {
+      runInAction(() => {
+        this.userInfo = res.data?.user
+      })
+    })
+  }
 
-    addGuest = (guestName: string, personCount: string) => {
-        if(guestName === "") {
-            Notification.showError("Заполните гостя");
-            return;
-        }
+  clearDate = () => {
+    runInAction(() => {
+      this.userInfo.personal.weddingDate = null;
+    })
+  }
 
-        API.user.addGuest(guestName, personCount, this.email).then((res) => {
-            runInAction(() => {
-                this.userInfo.guest = res.data?.guest
-            })
-        })
-    }
+  updateUserNames = (manName: string, womanName: string) => {
+    API.user.updateUserNames(manName, womanName, this.email).then((res) => {
+      runInAction(() => {
+        this.userInfo.personal = res.data?.personal
+      })
 
-    deleteGuest = (guestId: string) => {
-        API.user.deleteGuest(guestId, this.email).then((res) => {
-            runInAction(() => {
-                this.userInfo.guest = res.data?.guest
-            })
-        })
-    }
+      Notification.showSuccess('Данные успешно обновлены!');
+    })
+  }
 
-    addDate = (weddingDate: number) => {
-        API.user.addDate(weddingDate, this.email).then((res) => {
-            runInAction(() => {
-                this.userInfo.personal.weddingDate = res.data?.weddingDate
-            })
-        })
-    }
+  getCity = () => {
+    this.cityLoader = true;
 
-    clearDate = () => {
-        runInAction(() => {
-            this.userInfo.personal.weddingDate = null;
-        })
-    }
+    API.user.getCity().then((res) => {
+      runInAction(() => {
+        this.city = res.data
+      })
+    }).finally(() => runInAction(() => {
+      this.cityLoader = false
+    }))
+  }
 
-    updateUserNames = (manName: string, womanName: string) => {
-        API.user.updateUserNames(manName, womanName, this.email).then((res) => {
-            runInAction(() => {
-                this.userInfo.personal = res.data?.personal
-            })
+  citySearch = (query: string) => {
 
-            Notification.showSuccess('Данные успешно обновлены!');
-        })
-    }
+    API.user.getCitySearch(query).then((res) => {
+      runInAction(() => {
+        this.city = res.data
+      })
+    })
+  }
 
-    getCity = () => {
-        this.cityLoader = true;
-
-        API.user.getCity().then((res) => {
-            runInAction(() => {
-                this.city = res.data
-            })
-        }).finally(() => runInAction(() => {
-            this.cityLoader = false
-        }))
-    }
-
-    citySearch = (query: string) => {
-
-        API.user.getCitySearch(query).then((res) => {
-            runInAction(() => {
-                this.city = res.data
-            })
-        })
-    }
-
-    changeCity = (cityName: string) => {
-        API.user.changeCity(cityName, this.email).then((res) => {
-            runInAction(() => {
-                this.userInfo.personal.city = res.data?.city
-                Notification.showSuccess(res.data?.message);
-                NavigationService.pop()
-            })
-        })
-    }
+  changeCity = (cityName: string) => {
+    API.user.changeCity(cityName, this.email).then((res) => {
+      runInAction(() => {
+        this.userInfo = res.data?.user
+        Notification.showSuccess(res.data?.message);
+        NavigationService.pop()
+      })
+    })
+  }
 
 }

@@ -40,19 +40,19 @@ const BottomMenu = () => {
     return (
         <Tab.Navigator
             screenOptions={({route}) => ({
-                tabBarIcon: () => {
+                tabBarIcon: (tintColor) => {
                     switch (route.name) {
                         case Screens.HOME:
-                            return <IconBottomHome/>
+                            return <IconBottomHome color={tintColor.color || Colors.BLACK}/>
                             break;
                         case Screens.NOTE:
-                            return <IconBottomNotes color={Colors.BLACK}/>
+                            return <IconBottomNotes color={tintColor.color || Colors.BLACK}/>
                             break;
                         case Screens.NEWS:
-                            return <IconBottomNews/>
+                            return <IconBottomNews color={tintColor.color || Colors.BLACK}/>
                             break;
                         case Screens.PROFILE:
-                            return <IconBottomProfile/>
+                            return <IconBottomProfile color={tintColor.color || Colors.BLACK}/>
                             break;
                         default:
                             return false
@@ -93,7 +93,6 @@ export const Home = observer(() => {
                     </>
                 ) : (
                     <>
-
                         <Stack.Screen name={Screens.BOTTOM} component={BottomMenu}/>
                         {/*Home*/}
                         <Stack.Screen name={Screens.DRESS} component={DressScreen} options={{}}/>
