@@ -97,7 +97,7 @@ const ProfileScreen = observer(() => {
                                   style={styles.inputContainer}>
                     <View style={styles.input}>
                         <Text style={styles.dateText}>
-                            {userInfo?.personal?.city || 'Не выбрано'}
+                            {userStore?.userInfo?.personal?.city || 'Не выбрано'}
                         </Text>
                     </View>
                 </TouchableOpacity>

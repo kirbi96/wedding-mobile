@@ -2,9 +2,17 @@ import {makeAutoObservable, runInAction} from 'mobx';
 import API from "../api/Api";
 import Notification from "../utils/NotificationUtil";
 import {ICity} from "../screens/ProfileStack/CityScreen";
+import NavigationService from "../navigation/NavigationService";
 
 export class UserStore {
-    userInfo: any = {};
+    userInfo: any = {
+        personal: {
+            manName: null,
+            womanName: null,
+            weddingDate: null,
+            city: null,
+        }
+    };
     city: ICity[] = [];
     cityLoader: boolean = false;
     email: string = '';
@@ -111,12 +119,13 @@ export class UserStore {
     }
 
     changeCity = (cityName: string) => {
-        console.log(222, cityName)
-        // API.user.getCitySearch(query).then((res) => {
-        //     runInAction(() => {
-        //         this.city = res.data
-        //     })
-        // })
+        API.user.changeCity(cityName, this.email).then((res) => {
+            runInAction(() => {
+                this.userInfo.personal.city = res.data?.city
+                Notification.showSuccess(res.data?.message);
+                NavigationService.pop()
+            })
+        })
     }
 
 }

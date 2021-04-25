@@ -110,7 +110,7 @@ export const Home = observer(() => {
                         <Stack.Screen name={Screens.NOTES} component={UserNotesScreen}/>
                         <Stack.Screen name={Screens.DATE} component={WeddingDateScreen}/>
                         {/*News*/}
-                        <Stack.Screen name={Screens.INNEWS} component={InNewsScreen}/>
+                        <Stack.Screen name={Screens.IN_NEWS} component={InNewsScreen}/>
                         {/*City*/}
                         <Stack.Screen name={Screens.CITY} component={CityScreen}/>
                     </>

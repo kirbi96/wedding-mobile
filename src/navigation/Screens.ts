@@ -19,7 +19,7 @@ export default {
     DATE: 'WeddingDateScreen',
 
     //NEWS
-    INNEWS: 'InNewsScreen',
+    IN_NEWS: 'InNewsScreen',
 
     //NEWS
     CITY: 'CityScreen',

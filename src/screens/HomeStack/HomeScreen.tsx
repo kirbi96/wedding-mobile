@@ -20,7 +20,7 @@ export const HomeScreen = observer(() => {
   },[])
 
   if(categoryLoader){
-    return <Loader/>
+    return <Loader full={true}/>
   }
 
   return (

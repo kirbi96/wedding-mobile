@@ -2,6 +2,7 @@ import {makeAutoObservable, runInAction} from 'mobx';
 import API from "../api/Api";
 import {INews} from "../screens/NewsStack/NewsScreen";
 import NavigationService from "../navigation/NavigationService";
+import Screens from "../navigation/Screens";
 
 
 export class NewsStore {
@@ -13,7 +14,7 @@ export class NewsStore {
     }
 
     goToNews = ( news: INews ) =>{
-        NavigationService.navigate("InNewsScreen", {newsData: news})
+        NavigationService.navigate(Screens.IN_NEWS, {newsData: news})
     }
 
     getAllNews = () => {

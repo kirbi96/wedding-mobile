@@ -36,6 +36,10 @@ class UserAPI {
     updateUserNames = (manName: string, womanName: string, email: string) => {
         return axios.post('user/update', {manName, womanName, email});
     };
+
+    changeCity = (city: string, email: string) => {
+        return axios.post('user/city/add', {city, email});
+    };
 }
 
 const userAPI = new UserAPI();
