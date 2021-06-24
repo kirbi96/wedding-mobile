@@ -22,7 +22,7 @@ export class NewsStore {
 
         API.news.getAllNews().then((res) => {
             runInAction(() => {
-                this.allNews = res.data
+                this.allNews = res.data.reverse();
                 this.loadingNews = false
             })
         })

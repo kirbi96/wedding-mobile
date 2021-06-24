@@ -9,9 +9,9 @@ interface ILoader {
 const Loader = ({full = false}: ILoader) => {
     return (
         <View style={style.container}>
-            {full && (
-                <Image source={require("../../assets/images/kiss.gif")}/>
-            )}
+            {/*{full && (*/}
+            {/*    <Image source={require("../../assets/images/kiss.gif")}/>*/}
+            {/*)}*/}
             <ActivityIndicator color={Colors.BLUE_DARK} size="large" />
         </View>
     );

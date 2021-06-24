@@ -27,23 +27,23 @@ export const AuthScreen = observer(() => {
         setPassword(text)
     }
 
-    const registerHandler = () =>{
-        const data = {email, password}
+    const registerHandler = () => {
+        const refactorData = {email: email.toLowerCase(), password}
 
-        if(email === "" || password === "") {
+        if (email === "" || password === "") {
             Notification.showError("Заполните верные данные");
             return;
         }
 
-        login(data)
+        login(refactorData)
     }
 
-    if(authLoader){
+    if (authLoader) {
         return <Loader/>
     }
 
 
-    return(
+    return (
         <View style={styles.mainContainer}>
             <View style={{marginTop: 140}}/>
             <Text style={{textAlign: "center", color: Colors.BLUE_DARK, fontSize: 30, fontWeight: "bold"}}>Вход</Text>
@@ -79,7 +79,7 @@ export const AuthScreen = observer(() => {
 
 const styles = StyleSheet.create({
     mainContainer: {
-        flex:1,
+        flex: 1,
         paddingHorizontal: 20
     },
     profileBanner: {

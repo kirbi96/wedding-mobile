@@ -132,7 +132,7 @@ android {
         applicationId "com.weddingp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
+        versionCode 7
         versionName "1.0.1"
     }
     splits {
@@ -200,7 +200,7 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    implementation 'com.facebook.fresco:animated-gif:2.0.0'   //use
+//     implementation 'com.facebook.fresco:animated-gif:2.0.0'   //use
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
